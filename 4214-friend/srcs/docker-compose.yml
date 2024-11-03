@@ -1,0 +1,64 @@
+version: "3.9"
+services:
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx
+    ports:
+      - 443:443
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+      - mariadb
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+      - /home/hmaciel-/data/ng:/var/log/nginx
+    env_file:
+      - .env
+    restart: always
+
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: wordpress
+    ports:
+      - "9000:9000"
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+    networks:
+      - inception
+    restart: always
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb
+    hostname: mariadb
+    ports:
+      - "3306:3306"
+    volumes:
+       - db_data:/var/lib/mysql
+    networks:
+      - inception
+    restart: always
+    env_file:
+      - .env
+
+networks:
+  inception:
+
+volumes:
+  db_data: 
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/hmaciel-/data/db
+      o: bind
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/hmaciel-/data/wordpress
+      o: bind
