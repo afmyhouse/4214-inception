@@ -12,7 +12,7 @@ log:
 	docker compose -f ./srcs/docker-compose.yml logs
 
 down:
-	docker-compose -f ./srcs/docker-compose.yml down
+	docker compose -f ./srcs/docker-compose.yml down
 
 clean: down
 	docker system prune -af
