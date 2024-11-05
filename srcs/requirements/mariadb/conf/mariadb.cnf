@@ -1,3 +1,4 @@
+# mariadb.cnf
 # Basic MariaDB configuration file
 
 [mysqld]
@@ -5,13 +6,14 @@
 user=mysql
 pid-file=/var/run/mysqld/mysqld.pid
 socket=/var/run/mysqld/mysqld.sock
+
 # Defines the storage location for MariaDB data, which will link to your volume
 datadir=/var/lib/mysql
+
 # Allows connections from other containers
 bind-address=0.0.0.0
 port=3306
 
-# Security and performance tweaks
 # Speeds up connections by skipping DNS resolution
 skip-name-resolve
 # Sets the buffer pool for storage performance.
@@ -20,7 +22,7 @@ innodb_buffer_pool_size=256M
 max_connections=100
 
 # Enforce TLS if needed (optional, for stricter security)
-require_secure_transport=ON
+# require_secure_transport=ON
 
 # Custom database settings for your project
 # Sets the default character set to utf8mb4, which is compatible with WordPress,

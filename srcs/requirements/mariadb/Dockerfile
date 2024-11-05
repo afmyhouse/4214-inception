@@ -1,14 +1,10 @@
-FROM alpine:3.18
+FROM alpine:3.8
 
-LABEL Name=mariadb Version=0.0.1
+# Copy custom configuration and initialization files if needed
+# Optional if you have custom configurations
+COPY ./conf/mariadb.cnf /etc/mysql/mariadb.cnf
+# Optional if you have SQL to initialize
+COPY ./conf/init.sql /docker-entrypoint-initdb.d/  
 
-RUN apk update && apk add mariadb mariadb-client
-
-# Configure MariaDB
-COPY conf/mariadb.cnf /etc/my.cnf.d/
-COPY conf/init.sql /tmp/init.sql
-COPY tools/init.sh /docker-entrypoint-initdb.d/
-
+# Expose the default MariaDB port
 EXPOSE 3306
-
-CMD ["mysqld"]
