@@ -5,7 +5,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - db_datas:/var/lib/mysql  # Persistent storage
+      - data_db:/var/lib/mysql  # Persistent storage
     networks:
       - inception
     build: ./requirements/mariadb
@@ -16,7 +16,7 @@ networks:
   inception:
 
 volumes:
-  db_datas:
+  data_db:
     driver: local
     driver_opts:
       type: none
