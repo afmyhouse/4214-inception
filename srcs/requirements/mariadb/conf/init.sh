@@ -7,7 +7,7 @@ set -e
 # Initialize the MariaDB database directory if it does not exist.
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     echo "Initializing MariaDB data directory..."
-    mysql_install_db --basedir=/usr --user=mysql --datadir=/var/lib/mysql
+    mysql_install_db --basedir=/usr --user=mysql --datadir=/var/lib/mysql --skip-grant-tables
 fi
 
 # Start MariaDB in the background to run initialization commands.
@@ -22,8 +22,8 @@ done
 # SQL 1 Create database and users with environment variables
 mysql -u root <<-EOSQL
     CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
-    CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_USER_PASSWORD';
-    CREATE USER IF NOT EXISTS '$MYSQL_ADMIN'@'%' IDENTIFIED BY '$MYSQL_ADMIN_PASSWORD';
+    CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
+    CREATE USER IF NOT EXISTS '$MYSQL_ADMIN_USER'@'%' IDENTIFIED BY '$MYSQL_ADMIN_PASSWORD';
     GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';
     GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_ADMIN_USER'@'%';
     FLUSH PRIVILEGES;
