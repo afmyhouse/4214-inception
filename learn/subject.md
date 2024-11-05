@@ -55,7 +55,7 @@ The 'network:' line must be present in my docker-compose.yml file.
 ## Restrictions 3
 My containers musn’t be started with a command running an infinite loop. Thus,
 this also applies to any command used as entrypoint, or used in entrypoint
-scripts. 
+scripts.
 
 ## Restrictions 4
 The following are a few prohibited hacky patches:
@@ -94,6 +94,7 @@ like .env
 
 Below is an example of the expected directory structure:
 
+```bash
 $> ls -alR
 total XX
 drwxrwxr-x 3 wil wil 4096 avril 42 20:42 .
@@ -147,3 +148,4 @@ DOMAIN_NAME=antoda-s.42.fr
 # MYSQL SETUP
 MYSQL_USER=XXXXXXXXXXXX
 [...]
+```
