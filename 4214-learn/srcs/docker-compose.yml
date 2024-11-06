@@ -1,36 +1,36 @@
 version: "3.9"
 services:
-  # nginx:
-  #   build: ./requirements/nginx
-  #   container_name: nginx
-  #   ports:
-  #     - 443:443
-  #   networks:
-  #     - inception
-  #   depends_on:
-  #     - wordpress
-  #     - mariadb
-  #   volumes:
-  #     - wordpress_data:/var/www/html/wordpress
-  #     - /home/hmaciel-/data/ng:/var/log/nginx
-  #   env_file:
-  #     - .env
-  #   restart: always
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx
+    ports:
+      - 443:443
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+      - mariadb
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+      - /home/hmaciel-/data/ng:/var/log/nginx
+    env_file:
+      - .env
+    restart: always
 
-  # wordpress:
-  #   build: ./requirements/wordpress
-  #   container_name: wordpress
-  #   ports:
-  #     - "9000:9000"
-  #   volumes:
-  #     - wordpress_data:/var/www/html/wordpress
-  #   networks:
-  #     - inception
-  #   restart: always
-  #   depends_on:
-  #     - mariadb
-  #   env_file:
-  #     - .env
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: wordpress
+    ports:
+      - "9000:9000"
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+    networks:
+      - inception
+    restart: always
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
 
   mariadb:
     build: ./requirements/mariadb
@@ -50,7 +50,7 @@ networks:
   inception:
 
 volumes:
-  db_data: 
+  db_data:
     driver: local
     driver_opts:
       type: none
