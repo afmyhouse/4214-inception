@@ -1,8 +1,13 @@
 FROM alpine:3.19
 
+EXPOSE 9000
+EXPOSE 3306
+
 LABEL Name=af_wordpress Version=0.0.1
 
-RUN apk update && apk add php7 php7-fpm php7-mysqli php7-json
+RUN apk add wget php82 php82-phar php82-fpm php82-iconv fcgi php82-cgi php82-mysqli \
+    && adduser -D -g 'www' www \
+    && mkdir /var/www/html
 
 # Download and extract WordPress
 WORKDIR /var/www/html
@@ -12,6 +17,5 @@ RUN wget https://wordpress.org/latest.tar.gz && \
 
 COPY conf/wp-config.php /var/www/html/wp-config.php
 
-EXPOSE 9000
 
 CMD ["php-fpm7", "-F"]

@@ -2,8 +2,8 @@ services:
   mariadb:
     container_name: mariadb
     hostname: mariadb
-    ports:
-      - "3306:3306"
+    expose:
+      - "3306"
     volumes:
       - data_db:/var/lib/mysql  # Persistent storage
     networks:
@@ -17,8 +17,10 @@ services:
     build: ./requirements/nginx
     ports:
       - "443:443"
+    expose:
+      -  "9000"
     volumes:
-      - data_ng:/var/www/html
+      - data_wp:/var/www/html
     environment:
       - DOMAIN_NAME=${DOMAIN_NAME}
     networks:
@@ -27,6 +29,7 @@ services:
     env_file: .env  # Loads environment variables from .env file
 
   wordpress:
+    container_name: wordpress
     build: ./requirements/wordpress
     environment:
       - WP_DB_HOST=mariadb
@@ -35,6 +38,11 @@ services:
       - WP_DB_NAME=${MYSQL_DATABASE}
       - WP_DB_ADMIN=${MYSQL_ADMIN_USER}
       - WP_DB_ADMIN_PASS=${MYSQL_ADMIN_PASSWORD}
+    ports:
+      - "443:443"
+    expose:
+      - "3306"
+      - "9000"
     volumes:
       - data_wp:/var/www/html
     depends_on:
@@ -53,12 +61,6 @@ volumes:
     driver_opts:
       type: none
       device: /home/antoda-s/data/db
-      o: bind
-  data_ng:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/antoda-s/data/ng
       o: bind
   data_wp:
     driver: local
