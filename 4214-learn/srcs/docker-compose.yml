@@ -12,7 +12,7 @@ services:
       - mariadb
     volumes:
       - wordpress_data:/var/www/html/wordpress
-      - /home/hmaciel-/data/ng:/var/log/nginx
+      - /home/antoda-s/data/ng:/var/log/nginx
     env_file:
       - .env
     restart: always
@@ -54,11 +54,11 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/hmaciel-/data/db
+      device: /home/antoda-s/data/db
       o: bind
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: /home/hmaciel-/data/wordpress
+      device: /home/antoda-s/data/wordpress
       o: bind

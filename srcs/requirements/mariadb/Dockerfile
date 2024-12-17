@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.19
 
 LABEL Name=af_mariadb Version=0.0.1
 LABEL Description="This image is used to start the MariaDB database server."

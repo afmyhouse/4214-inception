@@ -12,6 +12,38 @@ services:
     restart: always
     env_file: .env  # Loads environment variables from .env file
 
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    ports:
+      - "443:443"
+    volumes:
+      - data_ng:/var/www/html
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+    networks:
+      - inception
+    restart: always
+    env_file: .env  # Loads environment variables from .env file
+
+  wordpress:
+    build: ./requirements/wordpress
+    environment:
+      - WP_DB_HOST=mariadb
+      - WP_DB_USER=${MYSQL_USER}
+      - WP_DB_PASSWORD=${MYSQL_PASSWORD}
+      - WP_DB_NAME=${MYSQL_DATABASE}
+      - WP_DB_ADMIN=${MYSQL_ADMIN_USER}
+      - WP_DB_ADMIN_PASS=${MYSQL_ADMIN_PASSWORD}
+    volumes:
+      - data_wp:/var/www/html
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+    restart: always
+    env_file: .env  # Loads environment variables from .env file
+
 networks:
   inception:
 
@@ -22,3 +54,19 @@ volumes:
       type: none
       device: /home/antoda-s/data/db
       o: bind
+  data_ng:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/antoda-s/data/ng
+      o: bind
+  data_wp:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/antoda-s/data/wp
+      o: bind
+  
+#********************************************
+
+
