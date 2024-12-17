@@ -14,5 +14,11 @@ define('SECURE_AUTH_SALT', getenv(SECURE_AUTH_SALT));
 define('LOGGED_IN_SALT',   getenv(LOGGED_IN_SALT));
 define('NONCE_SALT',       getenv(NONCE_SALT));
 
-define('WP_HOME', 'https://local.wordpress.local');
-define('WP_SITEURL', 'http://wordpress.local');
+define('WP_HOME', 'https://local.antoda-s.42.fr');
+define('WP_SITEURL', 'https://local.antoda-s.42.fr');
+
+define('FS_METHOD', 'direct');
+
+define('WP_DEBUG', true); // Enable debugging
+define('WP_DEBUG_LOG', true); // Log errors to wp-content/debug.log
+define('WP_DEBUG_DISPLAY', false); // Hide errors from the browser
