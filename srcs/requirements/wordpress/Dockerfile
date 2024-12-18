@@ -11,11 +11,12 @@ RUN apk add wget php82 php82-phar php82-fpm php82-iconv fcgi php82-cgi php82-mys
 
 # Download and extract WordPress
 WORKDIR /var/www/html
+
 RUN wget https://wordpress.org/latest.tar.gz && \
     tar -xzvf latest.tar.gz && rm latest.tar.gz && \
     mv wordpress/* . && rmdir wordpress
 
 COPY conf/wp-config.php /var/www/html/wp-config.php
-
+COPY conf/www.conf /etc/php82/php-fpm.d/www.conf
 
 CMD ["php-fpm82", "-F"]

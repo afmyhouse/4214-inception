@@ -18,13 +18,15 @@ services:
     ports:
       - "443:443"
     expose:
-      -  "9000"
+      - "9000"
     volumes:
       - data_wp:/var/www/html
     environment:
       - DOMAIN_NAME=${DOMAIN_NAME}
     networks:
       - inception
+    depends_on:
+      - wordpress
     restart: always
     env_file: .env
 
@@ -32,16 +34,13 @@ services:
     container_name: wordpress
     build: ./requirements/wordpress
     environment:
-      - WP_DB_HOST=mariadb
-      - WP_DB_USER=${MYSQL_USER}
-      - WP_DB_PASSWORD=${MYSQL_PASSWORD}
-      - WP_DB_NAME=${MYSQL_DATABASE}
-      - WP_DB_ADMIN=${MYSQL_ADMIN_USER}
-      - WP_DB_ADMIN_PASS=${MYSQL_ADMIN_PASSWORD}
-    ports:
-      - "443:443"
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_ADMIN: ${MYSQL_ADMIN_USER}
+      WORDPRESS_DB_ADMIN_PASS: ${MYSQL_ADMIN_PASSWORD}
     expose:
-      - "3306"
       - "9000"
     volumes:
       - data_wp:/var/www/html
