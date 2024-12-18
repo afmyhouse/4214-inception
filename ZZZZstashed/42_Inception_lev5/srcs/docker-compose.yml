@@ -59,14 +59,14 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/antoda-s/data/db
+      device: /home/nsoares-/data/db
       o: bind
   wordpress-data:
     name: wordpress_volume
     driver: local
     driver_opts:
       type: none
-      device: /home/antoda-s/data/wp
+      device: /home/nsoares-/data/wp
       o: bind
 
 networks:

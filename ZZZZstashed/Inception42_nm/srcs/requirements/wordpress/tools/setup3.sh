@@ -28,7 +28,7 @@ if [ ! -f "wp-config.php" ]; then
 	cp wp-config-sample.php wp-config.php
 	sed -i "s/username_here/$MYSQL_USER/g" wp-config.php
 	sed -i "s/password_here/$MYSQL_PASSWORD/g" wp-config.php
-	sed -i "s/localhost/$DB_HOST/g" wp-config.php
+	sed -i "s/localhost/$MYSQL_HOST/g" wp-config.php
 	sed -i "s/database_name_here/$MYSQL_DATABASE/g" wp-config.php
 	# install wp with following config
 	wp core install --url="https://nmoreira.42.fr" --title="Inception" --admin_user=$WP_ADMIN --admin_password=$WP_PASSWORD --admin_email=nmoreira@student.42porto.com --skip-email --allow-root
