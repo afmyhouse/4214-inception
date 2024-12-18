@@ -16,17 +16,16 @@ check_volume_folder:
 	@ if [ ! -d "/home/anton/data/db" ] || [ ! -d "/home/anton/data/wp" ]; then \
 		mkdir -p /home/anton/data/db /home/anton/data/wp; \
 	else \
-		echo "Volume data already exists."; \
+		echo "Volume entry already exists."; \
 	fi
 
 up: check_host check_volume_folder
 	@ echo "Starting docker containers"
-	@ docker compose -f $(DOCKER_PATH) up --build -d
-# && \
-# trap "make stop" EXIT
+	@ docker compose -f $(DOCKER_PATH) up --build -d && \
+	trap "make stop" EXIT
 
 down:
-	@ echo "Stopping docker containers"
+	@ echo "Downing docker containers and remove images"
 	@ docker compose -f $(DOCKER_PATH) down --rmi all -v
 
 start:
@@ -40,9 +39,6 @@ stop:
 clean:
 	@ echo "Removing all docker stuff"
 	@ docker system prune --all
-
-fclean: clean
-	@ echo "Remove data"
 	@ sudo rm -rf /home/anton/data
 
 .PHONY: all up down start stop clean
