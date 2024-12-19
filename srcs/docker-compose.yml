@@ -5,10 +5,10 @@ services:
     image: mariadb:42
     env_file:
       - .env
-    environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
-      MYSQL_PASSWORD_FILE: /run/secrets/db_password
-      MYSQL_DATABASE_FILE: /run/secrets/db_name
+    # environment:
+    #   MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    #   MYSQL_PASSWORD_FILE: /run/secrets/db_password
+    #   MYSQL_DATABASE_FILE: /run/secrets/db_name
     secrets:
       - db_password
       - db_root_password
@@ -17,9 +17,9 @@ services:
       - 3306:3306
     volumes:
       - db-data:/var/lib/mysql
-      - ../secrets/db_root_password.txt:/run/secrets/db_root_password:ro
-      - ../secrets/db_password.txt:/run/secrets/db_password:ro
-      - ../secrets/db_name.txt:/run/secrets/db_name:ro
+      # - ../secrets/db_root_password.txt:/run/secrets/db_root_password:ro
+      # - ../secrets/db_password.txt:/run/secrets/db_password:ro
+      # - ../secrets/db_name.txt:/run/secrets/db_name:ro
     networks:
       - project_network
     restart: always
@@ -30,23 +30,31 @@ services:
     image: wordpress:42
     env_file:
       - .env
-    environment:
-      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
-      WORDPRESS_DB_HOST_FILE: /run/secrets/db_host
-      WORDPRESS_DB_NAME_FILE: /run/secrets/db_name
-      WORDPRESS_ADMIN_PASSWORD_FILE: /run/secrets/wp_admin_password
-      WORDPRESS_USER_PASSWORD_FILE: /run/secrets/wp_user_password
+    # environment:
+    #   WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
+    #   WORDPRESS_DB_HOST_FILE: /run/secrets/db_host
+    #   WORDPRESS_DB_NAME_FILE: /run/secrets/db_name
+    #   WORDPRESS_ADMIN_PASSWORD_FILE: /run/secrets/wp_admin_password
+    #   WORDPRESS_USER_PASSWORD_FILE: /run/secrets/wp_user_password
     ports:
       - 9000:9000
     depends_on:
       - mariadb
     volumes:
       - wordpress-data:/var/www/html/wordpress
-      - ../secrets/db_password.txt:/run/secrets/db_password:ro
-      - ../secrets/db_host.txt:/run/secrets/db_host:ro
-      - ../secrets/db_name.txt:/run/secrets/db_name:ro
-      - ../secrets/wp_admin_password.txt:/run/secrets/wp_admin_password:ro
-      - ../secrets/wp_user_password.txt:/run/secrets/wp_user_password:ro
+      # - ../secrets/db_password.txt:/run/secrets/db_password:ro
+      # - ../secrets/db_host.txt:/run/secrets/db_host:ro
+      # - ../secrets/db_name.txt:/run/secrets/db_name:ro
+      # - ../secrets/wp_admin_password.txt:/run/secrets/wp_admin_password:ro
+      # - ../secrets/wp_user_password.txt:/run/secrets/wp_user_password:ro
+    secrets:
+      - db_password
+      - db_root_password
+      - db_host
+      - db_name
+      - wp_admin_password
+      - wp_user_password
+ 
     networks:
       - project_network
     restart: always

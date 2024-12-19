@@ -4,16 +4,16 @@ DOCKER_PATH = ./srcs/docker-compose.yml
 all: up
 
 check_host:
-	@ if ! grep -q "127.0.0.1 nmoreira.42.fr" /etc/hosts; then \
+	@ if ! grep -q "127.0.0.1 antoda-s.42.fr" /etc/hosts; then \
 		echo "Creating host entry..."; \
-		echo "127.0.0.1 nmoreira.42.fr" | sudo tee -a /etc/hosts; \
+		echo "127.0.0.1 antoda-s.42.fr" | sudo tee -a /etc/hosts; \
 	else \
 		echo "Host entry already exists."; \
 	fi
 
 check_volume_folder:
-	@ if [ ! -d "/home/nmoreira/data/db" ] || [ ! -d "/home/nmoreira/data/wp" ]; then \
-	mkdir -p /home/nmoreira/data/db /home/nmoreira/data/wp; \
+	@ if [ ! -d "/home/antoda-s/data/db" ] || [ ! -d "/home/antoda-s/data/wp" ]; then \
+	mkdir -p /home/antoda-s/data/db /home/antoda-s/data/wp; \
 	fi # need to change for my login
 
 build: check_host check_volume_folder
@@ -49,7 +49,7 @@ clean:
 	@docker compose -f $(DOCKER_PATH) down --rmi all --volumes
 
 fclean: clean
-	@sudo rm -rf /home/nmoreira/data;
+	@sudo rm -rf /home/antoda-s/data;
 
 re: fclean all
 

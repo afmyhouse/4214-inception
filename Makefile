@@ -44,4 +44,4 @@ clean:
 	@ docker system prune --all
 	@ sudo rm -rf /home/antoda-s/data
 
-.PHONY: all up down start stop clean
+.PHONY: all build up down start stop clean
