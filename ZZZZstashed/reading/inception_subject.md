@@ -69,14 +69,14 @@ Learn about PID 1 and the best practices for writing Dockerfiles.
 ### Restrictions 5:
 My volumes will be available in the /home/login/data folder of the host machine
 using Docker. Of course, I have to replace the login with my nicknaname:
-'anton'.
+'antoda-s'.
 
 ### Restrictions 6:
 To make things simpler, I have to configure my domain name so it points to my
 local IP address. This domain name must be nickname.42.fr. Again, I have to use
-my own nicjname 'anton'.
-For example, if my login is anton, anton.42.fr will redirect to the IP
-address pointing to anton’s website.
+my own nicjname 'antoda-s'.
+For example, if my login is antoda-s, antoda-s.42.fr will redirect to the IP
+address pointing to antoda-s’s website.
 
 ### Restrictions 7:
 The latest tag is prohibited.
@@ -147,7 +147,7 @@ drwxrwxr-x 2 wil wil 4096 avril 42 20:42 conf
 drwxrwxr-x 2 wil wil 4096 avril 42 20:42 tools
 [...]
 $> cat srcs/.env
-DOMAIN_NAME=anton.42.fr
+DOMAIN_NAME=antoda-s.42.fr
 # MYSQL SETUP
 MYSQL_USER=XXXXXXXXXXXX
 [...]

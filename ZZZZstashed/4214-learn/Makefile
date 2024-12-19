@@ -1,5 +1,5 @@
 all:
-	@echo "127.0.0.1       anton.42.fr" >> /etc/hosts
+	@echo "127.0.0.1       antoda-s.42.fr" >> /etc/hosts
 	@docker-compose -f ./srcs/docker-compose.yml up
 
 down:

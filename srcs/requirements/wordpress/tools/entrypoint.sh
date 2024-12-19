@@ -79,7 +79,7 @@ else
     echo "WordPress already installed and configured"
 fi
 
-echo "Access WordPress site here: https://anton.42.fr"
+echo "Access WordPress site here: https://antoda-s.42.fr"
 
 # Start PHP-FPM
 exec php-fpm7.4 -F

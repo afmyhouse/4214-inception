@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y nginx openssl
 # -nodes: This option tells OpenSSL to skip the option to secure our certificate with a passphrase.
 RUN openssl req -x509 -nodes -days 365 -keyout /etc/ssl/private/ssl-cert-snakeoil.key \
     -out /etc/ssl/certs/ssl-cert-snakeoil.pem \
-    -subj "/CN=anton/O=42/OU=42Porto/C=PT/L=Porto"
+    -subj "/CN=antoda-s/O=42/OU=42Porto/C=PT/L=Porto"
 
 # This directory is meant to contain configuration files for all possible sites that could be served by Nginx.
 COPY ./conf/nginx.conf /etc/nginx/sites-available/

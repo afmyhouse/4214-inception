@@ -72,14 +72,14 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/anton/data/db
+      device: /home/antoda-s/data/db
       o: bind
   wordpress-data:
     name: wordpress_volume
     driver: local
     driver_opts:
       type: none
-      device: /home/anton/data/wp
+      device: /home/antoda-s/data/wp
       o: bind
 
 networks:
