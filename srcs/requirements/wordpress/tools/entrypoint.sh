@@ -49,7 +49,7 @@ if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
     # Install WP-CLI
     echo "Installing WP-CLI..."
     wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp && \
-    chmod +x /usr/local/bin/wp
+    chmod 777 /usr/local/bin/wp
 
     # Prepare WordPress directory
     mkdir -p /var/www/html/wordpress

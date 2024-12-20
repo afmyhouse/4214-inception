@@ -57,12 +57,12 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/nmoreira/data/db
+      device: /home/antoda-s/data/db
       o: bind
   wpvol:
     name: wpvol
     driver: local
     driver_opts:
       type: none
-      device: /home/nmoreira/data/wp
+      device: /home/antoda-s/data/wp
       o: bind

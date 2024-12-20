@@ -30,8 +30,9 @@ if [ ! -f "wp-config.php" ]; then
 	sed -i "s/password_here/$MYSQL_PASSWORD/g" wp-config.php
 	sed -i "s/localhost/$MYSQL_HOST/g" wp-config.php
 	sed -i "s/database_name_here/$MYSQL_DATABASE/g" wp-config.php
+	sed -i "s/define( 'WP_DEBUG', false )/define( 'WP_DEBUG', true )/g" wp-config.php
 	# install wp with following config
-	wp core install --url="https://nmoreira.42.fr" --title="Inception" --admin_user=$WP_ADMIN --admin_password=$WP_PASSWORD --admin_email=nmoreira@student.42porto.com --skip-email --allow-root
+	wp core install --url="https://antoda-s.42.fr" --title="Inception" --admin_user=$WP_ADMIN --admin_password=$WP_PASSWORD --admin_email=antoda-s@student.42porto.com --skip-email --allow-root
 	# create user
 	wp user create $WP_USER nfmt2017@gmail.com --role=author --user_pass=$WP_USER_PASSWORD --allow-root --path=/var/www/html/wordpress
 fi
