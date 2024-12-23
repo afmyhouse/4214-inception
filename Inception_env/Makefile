@@ -46,7 +46,7 @@ down:
 	@ docker compose -f $(DOCKER_PATH) down 
 
 rmi:		
-	@ echo "docker conainers images REMOVE"
+	@ echo "docker containers images REMOVE"
 	@docker compose -f $(DOCKER_PATH) down --rmi all
 
 rmv:		

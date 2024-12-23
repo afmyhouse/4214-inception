@@ -3,12 +3,12 @@
 MYSQL_DATABASE=$(cat /run/secrets/db_name)
 MYSQL_PASSWORD=$(cat /run/secrets/db_password)
 MYSQL_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
-# echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-# echo "MYSQL_DATABASE: $MYSQL_DATABASE"
-# echo "MYSQL_USER: $MYSQL_USER"
-# echo "MYSQL_PASSWORD: $MYSQL_PASSWORD"
-# echo "MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD"
-# echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo "MYSQL_DATABASE: $MYSQL_DATABASE"
+echo "MYSQL_USER: $MYSQL_USER"
+echo "MYSQL_PASSWORD: $MYSQL_PASSWORD"
+echo "MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD"
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 # Initialize database if necessary
 if [ ! -d "/var/lib/mysql/${MYSQL_DATABASE}" ]; then
     echo "Initializing database..."
