@@ -16,6 +16,7 @@ cd /var/www/html/wordpress
 if [ -f /run/secrets/secrets.enc ]; then
     echo "Decrypting Secrets to 'temporary file'... "
 	openssl enc -aes-256-cbc -d -pbkdf2 -in /run/secrets/secrets.enc -out /run/secrets/secrets.txt -pass pass:$(cat /run/secrets/secret_key)
+	# openssl enc -aes-256-cbc -d -pbkdf2 -in /run/secrets/secrets.enc -out /run/secrets/secrets.txt -pass pass:$DECRYPTKEY
 	if [ $? -ne 0 ]; then
 		echo "Error: Failed to decrypt secrets."
 		exit 1
@@ -32,9 +33,14 @@ chmod 600 /run/secrets/secrets.txt
 # Open script scope for secrets safety
 (
 	# Set DB access vars from decrypted secrets file
+	# MYSQL_DATABASE=$(grep 'db_name=' /run/secrets/secrets.txt | cut -d '=' -f2)
+	# MYSQL_USER=$(grep 'db_user=' /run/secrets/secrets.txt | cut -d '=' -f2)
 	MYSQL_PASSWORD=$(grep 'db_password=' /run/secrets/secrets.txt | cut -d '=' -f2)
+	# MYSQL_HOST=$(grep 'db_host=' /run/secrets/secrets.txt | cut -d '=' -f2)
+	# WP_ADMIN=$(grep 'wp_admin=' /run/secrets/secrets.txt | cut -d '=' -f2)
 	WP_ADMIN_PASSWORD=$(grep 'wp_admin_password=' /run/secrets/secrets.txt | cut -d '=' -f2)
 	WP_ADMIN_EMAIL=$(grep 'wp_admin_email=' /run/secrets/secrets.txt | cut -d '=' -f2)
+	# WP_USER=$(grep 'wp_user=' /run/secrets/secrets.txt | cut -d '=' -f2)
 	WP_USER_PASSWORD=$(grep 'wp_user_password=' /run/secrets/secrets.txt | cut -d '=' -f2)
 	WP_USER_EMAIL=$(grep 'wp_user_email=' /run/secrets/secrets.txt | cut -d '=' -f2)
 
@@ -73,11 +79,6 @@ chmod 600 /run/secrets/secrets.txt
 		wp user create $WP_USER $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PASSWORD --allow-root --path=/var/www/html/wordpress
 		# Create user 2 : DONE!
 	fi
-	    # Set correct permissions
-    echo "Setting  permissions for WordPress directory..."
-    find /var/www/html/wordpress -type d -exec chmod 775 {} \;
-    find /var/www/html/wordpress -type f -exec chmod 775 {} \;
-    echo "All done!"
 )
 # Executa o PHP-FPM
 exec php-fpm7.4 -F

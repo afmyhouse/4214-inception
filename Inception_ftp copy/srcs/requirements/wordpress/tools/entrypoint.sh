@@ -32,11 +32,31 @@ chmod 600 /run/secrets/secrets.txt
 # Open script scope for secrets safety
 (
 	# Set DB access vars from decrypted secrets file
+	# MYSQL_DATABASE=$(grep 'db_name=' /run/secrets/secrets.txt | cut -d '=' -f2)
+	# MYSQL_USER=$(grep 'db_user=' /run/secrets/secrets.txt | cut -d '=' -f2)
 	MYSQL_PASSWORD=$(grep 'db_password=' /run/secrets/secrets.txt | cut -d '=' -f2)
+	# MYSQL_HOST=$(grep 'db_host=' /run/secrets/secrets.txt | cut -d '=' -f2)
+	# WP_ADMIN=$(grep 'wp_admin=' /run/secrets/secrets.txt | cut -d '=' -f2)
 	WP_ADMIN_PASSWORD=$(grep 'wp_admin_password=' /run/secrets/secrets.txt | cut -d '=' -f2)
 	WP_ADMIN_EMAIL=$(grep 'wp_admin_email=' /run/secrets/secrets.txt | cut -d '=' -f2)
+	# WP_USER=$(grep 'wp_user=' /run/secrets/secrets.txt | cut -d '=' -f2)
 	WP_USER_PASSWORD=$(grep 'wp_user_password=' /run/secrets/secrets.txt | cut -d '=' -f2)
 	WP_USER_EMAIL=$(grep 'wp_user_email=' /run/secrets/secrets.txt | cut -d '=' -f2)
+
+	echo ""
+	echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	echo "MYSQL_DATABASE: $MYSQL_DATABASE"
+	echo "MYSQL_USER: $MYSQL_USER"
+	echo "MYSQL_PASSWORD: $MYSQL_PASSWORD"
+	echo "MYSQL_HOST: $MYSQL_HOST"
+	echo "WP_ADMIN: $WP_ADMIN"
+	echo "WP_ADMIN_PASSWORD: $WP_ADMIN_PASSWORD"
+	echo "WP_ADMIN_EMAIL: $WP_ADMIN_EMAIL"
+	echo "WP_USER: $WP_USER"
+	echo "WP_USER_PASSWORD: $WP_USER_PASSWORD"
+	echo "WP_USER_EMAIL: $WP_USER_EMAIL"
+	echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	echo ""
 
 	rm /run/secrets/secrets.txt
     echo "Secrets 'temporary file' deleted..."
@@ -75,8 +95,8 @@ chmod 600 /run/secrets/secrets.txt
 	fi
 	    # Set correct permissions
     echo "Setting  permissions for WordPress directory..."
-    find /var/www/html/wordpress -type d -exec chmod 775 {} \;
-    find /var/www/html/wordpress -type f -exec chmod 775 {} \;
+    find /var/www/html/wordpress -type d -exec chmod 777 {} \;
+    find /var/www/html/wordpress -type f -exec chmod 777 {} \;
     echo "All done!"
 )
 # Executa o PHP-FPM

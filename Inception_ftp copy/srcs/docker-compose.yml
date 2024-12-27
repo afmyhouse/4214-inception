@@ -53,7 +53,7 @@ services:
       - wpvol:/var/www/html/wordpress
 
   ftp:
-    build: ./requirements/bonus/ftp
+    build: ./requirements/ftp
     container_name: ftp
     image: ftp:42
     expose:
@@ -69,8 +69,7 @@ services:
     networks:
       - inception
     volumes:
-      - wpvol:/var/ftp/users/wordpress
-      # - wpvol:/var/ftp/users/ftpuser/wordpress
+      - wpvol:/var/ftp/users/ftpuser/wordpress
       - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
       # - wpvol:/var/ftp/users
     secrets:

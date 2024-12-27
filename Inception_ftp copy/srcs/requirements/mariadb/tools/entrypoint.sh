@@ -25,7 +25,18 @@ chmod 600 /run/secrets/secrets.txt
 (
     # Extract secrets into environment variables
     MYSQL_ROOT_PASSWORD=$(grep 'db_root_password=' /run/secrets/secrets.txt | cut -d '=' -f2)
+    # MYSQL_DATABASE=$(grep 'db_name=' /run/secrets/secrets.txt | cut -d '=' -f2)
+    # MYSQL_USER=$(grep 'db_user=' /run/secrets/secrets.txt | cut -d '=' -f2)
     MYSQL_PASSWORD=$(grep 'db_password=' /run/secrets/secrets.txt | cut -d '=' -f2)
+
+	echo ""
+	echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	echo "MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD"
+	echo "MYSQL_DATABASE: $MYSQL_DATABASE"
+	echo "MYSQL_USER: $MYSQL_USER"
+	echo "MYSQL_PASSWORD: $MYSQL_PASSWORD"
+	echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	echo ""
 
     rm /run/secrets/secrets.txt
     echo "Secrets 'temporary file' deleted..."

@@ -1,0 +1,37 @@
+Permissions and ownership details:
+
+# ls -la /var/ftp
+drwxr-xr-x 1 root root 4096 Dec 23 16:15 /var/ftp
+
+# ls -ld /var/ftp/users
+drwxr-xr-x 1 root root 4096 Dec 23 16:15 /var/ftp/users
+
+# ls -ld /var/ftp/users/ftpuser
+drwxr-xr-x 3 ftpuser ftpuser 4096 Dec 23 16:15 /var/ftp/users/ftpuser
+
+# ls -ld /var/ftp/wordpress    
+drwxr-xr-x 5 ftpuser ftpuser 4096 Dec 23 16:15 /var/ftp/wordpress
+
+Current FTP client logs:
+$ docker logs ftp
+Decrypting Secrets to 'temporary file'... 
+Secrets decrypted successfully.
+FTP_USER: ftpuser
+FTP_PASSWORD: [HIDDEN]
+Secrets 'temporary file' deleted...
+Creating FTP user ftpuser...
+New password: Retype new password: passwd: password updated successfully
+Setting ownership and permissions for WordPress directory...
+WordPress directory linked to FTP user's home directory.
+
+docker-compose logs ftp
+ftp  | Decrypting Secrets to 'temporary file'... 
+ftp  | Secrets decrypted successfully.
+ftp  | FTP_USER: ftpuser
+ftp  | FTP_PASSWORD: [HIDDEN]
+ftp  | Secrets 'temporary file' deleted...
+ftp  | Creating FTP user ftpuser...
+ftp  | New password: Retype new password: passwd: password updated successfully
+ftp  | Setting ownership and permissions for WordPress directory...
+ftp  | WordPress directory linked to FTP user's home directory.
+ftp  | Starting vsftpd...

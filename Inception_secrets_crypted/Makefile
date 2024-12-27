@@ -25,8 +25,9 @@ check_volume_folder:
 
 up: check_host check_volume_folder
 	@ echo "docker containers UP"
-	@ docker compose -f $(DOCKER_PATH) up --build && \
-	trap "make stop" EXIT
+	@ docker compose -f $(DOCKER_PATH) up -d
+# @ docker compose -f $(DOCKER_PATH) up --build  && \
+# trap "make stop" EXIT
 
 start:
 	@ echo "docker containers START"

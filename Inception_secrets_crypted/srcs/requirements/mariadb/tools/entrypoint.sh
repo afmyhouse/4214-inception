@@ -2,8 +2,6 @@
 
 # entrypoint.sh for 'mariadb' docker image
 
-echo "$(cat /run/secrets/secret_key)"
-
 # Decrypt secrets
 if [ -f /run/secrets/secrets.enc ]; then
     echo "Decrypting Secrets to 'temporary file'... "
@@ -25,6 +23,8 @@ chmod 600 /run/secrets/secrets.txt
 (
     # Extract secrets into environment variables
     MYSQL_ROOT_PASSWORD=$(grep 'db_root_password=' /run/secrets/secrets.txt | cut -d '=' -f2)
+    #MYSQL_DATABASE=$(grep 'db_name=' /run/secrets/secrets.txt | cut -d '=' -f2)
+    #MYSQL_USER=$(grep 'db_user=' /run/secrets/secrets.txt | cut -d '=' -f2)
     MYSQL_PASSWORD=$(grep 'db_password=' /run/secrets/secrets.txt | cut -d '=' -f2)
 
     rm /run/secrets/secrets.txt

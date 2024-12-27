@@ -1,0 +1,81 @@
+
+services:
+
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    image: nginx:42
+    ports:
+      - "443:443"
+    depends_on:
+      - wordpress
+    volumes:
+      - wpvol:/var/www/html
+    networks:
+      - inception
+    env_file:
+      - .env
+    restart: always
+  
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    image: wordpress:42
+    depends_on:
+      - mariadb
+    volumes:
+      - wpvol:/var/www/html
+      - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: always
+    expose:
+      - "9000"
+    secrets:
+      - secret_key
+  
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    image: mariadb:42
+    volumes:
+      - dbvol:/var/lib/mysql
+      - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: always
+    expose:
+      - "3306"
+    secrets:
+      - secret_key
+
+secrets:
+  secrets_enc:
+    file: ../secrets/secrets.enc
+  secret_key:
+    file: ../secrets/secrets_vault/decryptkey.txt
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
+volumes: 
+  dbvol:
+    name: dbvol
+    driver: local
+    driver_opts:
+      device: /home/antoda-s/data/db
+      o: bind
+      type: none
+  wpvol:
+    name: wpvol
+    driver: local
+    driver_opts:
+      device: /home/antoda-s/data/wp
+      o: bind
+      type: none
