@@ -78,6 +78,7 @@ chmod 600 /run/secrets/secrets.txt
     find /var/www/html/wordpress -type d -exec chmod 775 {} \;
     find /var/www/html/wordpress -type f -exec chmod 775 {} \;
     echo "All done!"
+	echo "Access WordPress site here: https://antoda-s.42.fr"
 )
 # Executa o PHP-FPM
 exec php-fpm7.4 -F

@@ -19,8 +19,14 @@ RUN wget https://downloads.mariadb.com/MariaDB/mariadb_repo_setup && \
     rm -rf /var/lib/apt/lists/*
 
 # Step 4: Copy custom entrypoint script
+#COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 COPY ./tools/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+
+RUN rm /etc/mysql/mariadb.conf.d/50-server.cnf 
+# Swith off the bind address 
+COPY tools/50-server.cnf /etc/mysql/mariadb.conf.d 
 
 # Step 5: Expose ports and volumes
 EXPOSE 3306
@@ -28,3 +34,4 @@ VOLUME ["/var/lib/mysql"]
 
 # Step 6: Set entrypoint
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+

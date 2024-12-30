@@ -19,7 +19,6 @@ check_volume_folder:
 # build: check_host check_volume_folder
 # 	@docker compose -f $(DOCKER_PATH) build 
 
-# posso colocar ou não o -d - funcionar no background daemon e libertar o terminal docker compose -f ./srcs/docker-compose.yml  start
 # up: build
 # 	@docker compose -f $(DOCKER_PATH) up
 
