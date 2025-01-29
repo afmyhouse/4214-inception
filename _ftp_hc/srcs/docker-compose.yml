@@ -69,8 +69,10 @@ services:
     networks:
       - inception
     volumes:
+      # - wpvol:/var/ftp/users/wordpress
       - wpvol:/var/ftp/users/ftpuser/wordpress
       - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
+      # - wpvol:/var/ftp/users
     secrets:
       - secret_key
     restart: always
