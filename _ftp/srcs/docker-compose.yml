@@ -75,7 +75,7 @@ services:
       - inception
 #    healthcheck:
 #      test: ["CMD", "curl", "-f", "https://localhost"]
-#      interval: 30s
+#      interval: 30swp-content/uploads/2025/01.
 #      timeout: 10s
 #      retries: 5
     logging:
@@ -84,39 +84,39 @@ services:
         max-size: "10m"
         max-file: "3"
 
-  ftp:
-    build: ./requirements/bonus/ftp
-    container_name: ftp
-    image: ftp:42
-    expose:
-      - "21"
-      - "10000-10100"
-    ports:
-      - "21:21"
-      - "10000-10100:10000-10100"
-    depends_on:
-      - wordpress
-#        condition: service_healthy
-    env_file:
-      - ../.env
-    restart: always
-    volumes:
-      - wpvol:/var/ftp/users/ftpuser/wordpress
-      - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
-    secrets:
-      - secret_key
-    networks:
-      - inception
-#    healthcheck:
-#      test: ["CMD", "curl", "-f", "ftp://localhost"]
-#      interval: 30s
-#      timeout: 10s
-#      retries: 5
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
+#   ftp:
+#     build: ./requirements/bonus/ftp
+#     container_name: ftp
+#     image: ftp:42
+#     expose:
+#       - "21"
+#       - "10000-10100"
+#     ports:
+#       - "21:21"
+#       - "10000-10100:10000-10100"
+#     depends_on:
+#       - wordpress
+# #        condition: service_healthy
+#     env_file:
+#       - ../.env
+#     restart: always
+#     volumes:
+#       - wpvol:/var/ftp/users/ftpuser/wordpress
+#       - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
+#     secrets:
+#       - secret_key
+#     networks:
+#       - inception
+# #    healthcheck:
+# #      test: ["CMD", "curl", "-f", "ftp://localhost"]
+# #      interval: 30s
+# #      timeout: 10s
+# #      retries: 5
+#     logging:
+#       driver: json-file
+#       options:
+#         max-size: "10m"
+#         max-file: "3"
 
 secrets:
   secrets_enc:

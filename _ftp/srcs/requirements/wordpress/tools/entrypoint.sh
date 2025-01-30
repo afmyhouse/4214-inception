@@ -75,8 +75,20 @@ chmod 600 /run/secrets/secrets.txt
 	fi
 	    # Set correct permissions
     echo "Setting  permissions for WordPress directory..."
-    find /var/www/html/wordpress -type d -exec chmod 775 {} \;
-    find /var/www/html/wordpress -type f -exec chmod 775 {} \;
+    echo "Ensure FTP user has access to WordPress directory"
+    # ln -s /var/www/html/wordpress
+    # chown -R ${WP_ADMIN}:${WP_ADMIN} /var/www/html/wordpress
+    # chmod -R 775 /var/www/html/wordpress    
+#issue 22 : try to have access to write files at wordpress dirs ===================
+	find /var/www/html/wordpress -type d -exec chmod 775 {} \;
+    find /var/www/html/wordpress -type f -exec chmod 775 {} \;	
+#issue 22 : end of try ===================
+	
+	find /var/www/html/wordpress -type d -exec chmod 777 {} \;
+    find /var/www/html/wordpress -type f -exec chmod 777 {} \;
+
+
+
     echo "All done!"
 	echo "Access WordPress site here: https://antoda-s.42.fr"
 )
