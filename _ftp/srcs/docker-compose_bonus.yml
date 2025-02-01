@@ -51,6 +51,15 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+  
+  website:
+    build: ./requirements/bonus/website  # Path to the Dockerfile for the website service
+    container_name: website
+    volumes:
+      - wsvol:/var/www/html  # Mount the local HTML files into the container
+    networks:
+      - inception
+    restart: always
 
   nginx:
     build: ./requirements/nginx
@@ -58,15 +67,66 @@ services:
     image: nginx:42
     ports:
       - "443:443"
+      - "80:80"  # Add port 80 for HTTP (optional, if you want to serve the HTML site over HTTP)
+    depends_on:
+      - wordpress
+      - website # Ensure the website service is running before Nginx
+    env_file:
+      - ../.env
+    restart: always
+    volumes:
+      - wpvol:/var/www/html/wordpress
+      - wsvol:/var/www/html/website  # New HTML site volume
+    networks:
+      - inception
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  ftp:
+    build: ./requirements/bonus/ftp
+    container_name: ftp
+    image: ftp:42
+    expose:
+      - "21"
+      - "10000-10100"
+    ports:
+      - "21:21"
+      - "10000-10100:10000-10100"
     depends_on:
       - wordpress
     env_file:
       - ../.env
     restart: always
     volumes:
-      - wpvol:/var/www/html/wordpress
+      - wpvol:/var/ftp/users/ftpuser/wordpress
+      - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
+    secrets:
+      - secret_key
     networks:
       - inception
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+  redis:
+    build: ./requirements/bonus/redis  # Path to the Redis Dockerfile
+    container_name: redis
+    expose:
+      - "6379"
+    env_file:
+      - ../.env
+    restart: always
+    networks:
+      - inception
+    volumes:
+      - wpvol:/var/www/html/wordpress
+      # - redisvol:/data  # Persist Redis data
+    secrets:
+      - secret_key
     logging:
       driver: json-file
       options:
@@ -98,4 +158,18 @@ volumes:
     driver_opts:
       type: none
       device: /home/antoda-s/data/wp
+      o: bind
+  redisvol:
+    name: redisvol
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/antoda-s/data/redis
+      o: bind
+  wsvol:
+    name: wsvol
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/antoda-s/ws
       o: bind

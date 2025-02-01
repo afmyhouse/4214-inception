@@ -5,7 +5,7 @@ FROM debian:bullseye
 # Step 2: Install dependencies
 RUN apt update && apt upgrade -y
 RUN apt install nginx -y && apt install openssl -y
-
+RUN apt update && apt install -y curl
 # Step 3: Add nginx site
 COPY ./conf/antoda-s42fr.conf /etc/nginx/sites-available/
 RUN ln -s /etc/nginx/sites-available/antoda-s42fr.conf /etc/nginx/sites-enabled/
