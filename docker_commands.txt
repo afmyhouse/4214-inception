@@ -1,9 +1,0 @@
-to check containers running status
-docker ps -a
-
-to check container PID
-sudo docker inspect --format '{{.State.Pid}}' container_name
-
-to kill container by PID
-sudo kill -9 PID
-

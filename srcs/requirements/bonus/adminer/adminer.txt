@@ -1,0 +1,43 @@
+exit(137) adminer
+
+srcs/docker-compose.yml 
+services:
+...
+  adminer:
+    build: requirements/bonus/adminer
+    container_name: adminer
+    image: adminer:af
+    ports:
+      - target: 8080
+        published: 8080
+    networks:
+      - inception
+    restart:
+      on-failure
+...
+
+srcs/requirements/bonus/adminer/tools/entrypoint.sh 
+#!/bin/sh
+# Create the web directory and set permissions
+mkdir -p /var/www/html
+chown -R www-data:www-data /var/www/html
+# Download Adminer
+wget https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php -O /var/www/html/index.php
+# Start PHP server in the background
+php -S 0.0.0.0:8080 -t /var/www/html &
+# Capture the PID of the PHP server
+PHP_PID=$!
+# Trap SIGTERM and gracefully stop the PHP server
+trap "echo 'Stopping PHP server...'; kill -TERM $PHP_PID" SIGTERM
+# Wait for the PHP server to exit
+wait $PHP_PID
+
+
+
+srcs/requirements/bonus/adminer/Dockerfile:
+FROM debian:bullseye
+RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get install -y wget php php-mysqli
+COPY ./tools/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh && /entrypoint.sh
+ENTRYPOINT [ "php", "-S", "0.0.0.0:8080", "-t", "/var/www/html" ]
