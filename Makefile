@@ -110,4 +110,4 @@ bonus_re: bonus_fclean bonus
 
 
 
-.PHONY: all up down build start stop rm rmi rmv clean fclean re
+.PHONY: all up down build start stop rm rmi rmv clean fclean re bonus bonus_up bonus_down bonus_build bonus_start bonus_stop bonus_rm bonus_rmi bonus_rmv bonus_clean bonus_fclean bonus_re
