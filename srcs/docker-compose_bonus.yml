@@ -7,7 +7,7 @@ services:
     expose:
       - "3306"
     env_file:
-      - ../.env
+      - /home/antoda-s/secrets/.env
     restart: on-failure:5
     # restart: unless-stopped
     networks:
@@ -43,7 +43,7 @@ services:
         condition: service_healthy
       # issue wp connection with redis END
     env_file:
-      - ../.env
+      - /home/antoda-s/secrets/.env
     restart: on-failure:5
     networks:
       - inception
@@ -80,7 +80,7 @@ services:
       - wordpress
       - website # Ensure the website service is running before Nginx
     env_file:
-      - ../.env
+      - /home/antoda-s/secrets/.env
     restart: on-failure:5
     volumes:
       - wpvol:/var/www/html/wordpress
@@ -106,7 +106,7 @@ services:
     depends_on:
       - wordpress
     env_file:
-      - ../.env
+      - /home/antoda-s/secrets/.env
     restart: on-failure:5
     volumes:
       - wpvol:/var/ftp/users/ftpuser/wordpress
@@ -158,7 +158,7 @@ services:
     container_name: rsync
     image: rsync:af
     env_file:
-      - ../.env
+      - /home/antoda-s/secrets/.env
     volumes:
       - wpvol:/var/www/html
       - rsync:/home/backup/

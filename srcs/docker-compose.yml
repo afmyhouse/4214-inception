@@ -7,7 +7,7 @@ services:
     expose:
       - "3306"
     env_file:
-      - ../.env
+      - /home/antoda-s/secrets/.env
     restart:
       on-failure:5
     networks:
@@ -39,7 +39,7 @@ services:
       mariadb:
         condition: service_healthy
     env_file:
-      - ../.env
+      - /home/antoda-s/secrets/.env
     restart:
       on-failure:5
     networks:
@@ -64,7 +64,7 @@ services:
     depends_on:
       - wordpress
     env_file:
-      - ../.env
+      - /home/antoda-s/secrets/.env
     restart:
       on-failure:5
     volumes:
