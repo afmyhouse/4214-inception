@@ -88,8 +88,10 @@ chmod 600 /run/secrets/secrets.txt
 
     # Set correct permissions
     echo "Setting permissions for WordPress directory..."
-    find /var/www/html/wordpress -type d -exec chmod 775 {} \;
-    find /var/www/html/wordpress -type f -exec chmod 664 {} \;
+    # find /var/www/html/wordpress -type d -exec chmod 775 {} \;
+    # find /var/www/html/wordpress -type f -exec chmod 775 {} \;
+    find /var/www/html/wordpress/wp-content -type d -exec chmod 777 {} \;
+    find /var/www/html/wordpress/wp-content -type f -exec chmod 777 {} \;
 
 	# Try fix issue REDIS filesystem not writable : Ensure WordPress has correct ownership before starting
 	# chown -R www-data:www-data /var/www/html/wordpress

@@ -1,6 +1,5 @@
-Here’s how to test **`rsync` in a Docker container**, in **Markdown** format:  
+Here’s how to test **`rsync` in a Docker container:  
 
-```md
 # How to Test `rsync` in a Docker Container
 
 ## 1️⃣ Verify `rsync` is Installed in the Container
@@ -89,4 +88,3 @@ docker exec -it container2 cat /tmp/test.txt
 ---
 
 ✅ **Test successful if files are correctly transferred!** 🚀  
-```

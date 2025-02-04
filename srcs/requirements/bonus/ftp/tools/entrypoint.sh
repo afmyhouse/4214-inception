@@ -42,8 +42,8 @@ trap cleanup SIGTERM
         echo "Creating FTP user ${FTP_USER}..."
         useradd -m ${FTP_USER}
         echo -e "${FTP_PASSWORD}\n${FTP_PASSWORD}" | passwd ${FTP_USER}
-        mkdir -p /var/ftp/users/${FTP_USER}/uploads
-        mkdir -p /var/ftp/users/${FTP_USER}/wordpress
+        # mkdir -p /var/ftp/users/${FTP_USER}/uploads
+        # mkdir -p /var/ftp/users/${FTP_USER}/wordpress
     fi
 
     echo "Ensure FTP user has access to WordPress directory"

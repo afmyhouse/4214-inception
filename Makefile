@@ -15,13 +15,13 @@ check_host:
 	fi
 
 check_volume_folder:
-	@ if [ ! -d "/home/antoda-s/data/db" ] || [ ! -d "/home/antoda-s/data/wp" ] || [ ! -d "/home/antoda-s/data/backup" ]; then \
-	mkdir -p /home/antoda-s/data/db /home/antoda-s/data/wp /home/antoda-s/data/backup; \
+	@ if [ ! -d "/home/antoda-s/data/db" ] || [ ! -d "/home/antoda-s/data/wp" ] ; then \
+	mkdir -p /home/antoda-s/data/db /home/antoda-s/data/wp ; \
 	fi
 
-check_volume_redis:
-	@ if [ ! -d "/home/antoda-s/data/redis" ] ; then \
-	mkdir -p /home/antoda-s/data/redis ; \
+check_volume_bonus:
+	@ if [ ! -d "/home/antoda-s/data/backup" ] || [ ! -d "/home/antoda-s/data/ws" ] ; then \
+	mkdir -p /home/antoda-s/data/backup /home/antoda-s/data/ws; cp /home/antoda-s/ws/*.* /home/antoda-s/data/ws/; \
 	fi
 
 # build: check_host check_volume_folder
@@ -69,7 +69,7 @@ fclean: clean
 
 re: fclean all
 
-bonus_up: check_host check_volume_folder check_volume_redis
+bonus_up: check_host check_volume_folder check_volume_bonus
 	@ echo "docker containers UP"
 	@ docker compose -f $(DOCKER_BONUS_PATH) up --build && \
 	trap "make bonus_stop" EXIT

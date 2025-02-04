@@ -76,8 +76,10 @@ chmod 600 /run/secrets/secrets.txt
 
 	# Set correct permissions
 	echo "Setting  permissions for WordPress directory..."
-	find /var/www/html/wordpress -type d -exec chmod 775 {} \;
-    find /var/www/html/wordpress -type f -exec chmod 775 {} \;	
+	# find /var/www/html/wordpress -type d -exec chmod 775 {} \;
+    # find /var/www/html/wordpress -type f -exec chmod 775 {} \;	
+    find /var/www/html/wordpress/wp-content -type d -exec chmod 777 {} \;
+    find /var/www/html/wordpress/wp-content -type f -exec chmod 777 {} \;
 
     echo "All done!"
 	echo "Access WordPress site here: https://antoda-s.42.fr"

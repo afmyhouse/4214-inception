@@ -148,7 +148,7 @@ services:
     restart:
       on-failure
     mem_limit: 512m  # Adjust as needed
-    stop_grace_period: 30s
+    # stop_grace_period: 30s
  
   rsync:
     build: requirements/bonus/rsync
