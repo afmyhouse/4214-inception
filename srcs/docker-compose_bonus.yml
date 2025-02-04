@@ -8,7 +8,8 @@ services:
       - "3306"
     env_file:
       - ../.env
-    restart: unless-stopped
+    restart: on-failure:5
+    # restart: unless-stopped
     networks:
       - inception
     volumes:
@@ -42,7 +43,7 @@ services:
       # issue wp connection with redis END
     env_file:
       - ../.env
-    restart: unless-stopped
+    restart: on-failure:5
     networks:
       - inception
     volumes:
@@ -64,7 +65,7 @@ services:
       - wsvol:/var/www/html  # Mount the local HTML files into the container
     networks:
       - inception
-    restart: unless-stopped
+    restart: on-failure:5
 
   nginx:
     build: ./requirements/nginx
@@ -78,7 +79,7 @@ services:
       - website # Ensure the website service is running before Nginx
     env_file:
       - ../.env
-    restart: unless-stopped
+    restart: on-failure:5
     volumes:
       - wpvol:/var/www/html/wordpress
       - wsvol:/var/www/html/website  # New HTML site volume
@@ -104,7 +105,7 @@ services:
       - wordpress
     env_file:
       - ../.env
-    restart: unless-stopped
+    restart: on-failure:5
     volumes:
       - wpvol:/var/ftp/users/ftpuser/wordpress
       - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
@@ -124,7 +125,7 @@ services:
     networks:
       - inception
     restart:
-      on-failure
+      on-failure:5
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -146,7 +147,7 @@ services:
     networks:
       - inception
     restart:
-      on-failure
+      on-failure:5
     mem_limit: 512m  # Adjust as needed
     # stop_grace_period: 30s
  
@@ -162,7 +163,7 @@ services:
     networks:
       - inception
     restart:
-      on-failure
+      on-failure:5
 
 secrets:
   secrets_enc:

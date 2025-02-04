@@ -8,7 +8,8 @@ services:
       - "3306"
     env_file:
       - ../.env
-    restart: always
+    restart:
+      on-failure:5
     networks:
       - inception
     volumes:
@@ -38,7 +39,8 @@ services:
         condition: service_healthy
     env_file:
       - ../.env
-    restart: always
+    restart:
+      on-failure:5
     networks:
       - inception
     volumes:
@@ -62,7 +64,8 @@ services:
       - wordpress
     env_file:
       - ../.env
-    restart: always
+    restart:
+      on-failure:5
     volumes:
       - wpvol:/var/www/html/wordpress
     networks:
