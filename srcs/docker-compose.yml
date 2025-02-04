@@ -14,7 +14,8 @@ services:
       - inception
     volumes:
       - dbvol:/var/lib/mysql
-      - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
+      - /home/antoda-s/secrets/secrets.enc:/run/secrets/secrets.enc:ro
+      # - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
     secrets:
       - secret_key
     healthcheck:
@@ -45,7 +46,7 @@ services:
       - inception
     volumes:
       - wpvol:/var/www/html/wordpress
-      - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
+      - /home/antoda-s/secrets/secrets.enc:/run/secrets/secrets.enc:ro
     secrets:
       - secret_key
     logging:
@@ -78,9 +79,9 @@ services:
 
 secrets:
   secrets_enc:
-    file: ../secrets/secrets.enc
+    file: /home/antoda-s/secrets/secrets.enc
   secret_key:
-    file: ../secrets/secrets_vault/decryptkey.txt
+    file: /home/antoda-s/secrets/secrets_vault/decryptkey.txt
 
 networks:
   inception:
