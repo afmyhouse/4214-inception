@@ -3,19 +3,18 @@ services:
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
-    image: mariadb:42
+    image: mariadb:af
     expose:
       - "3306"
     env_file:
       - /home/antoda-s/secrets/.env
-    restart: on-failure:5
-    # restart: unless-stopped
+    restart: 
+      on-failure:5
     networks:
       - inception
     volumes:
       - dbvol:/var/lib/mysql
       - /home/antoda-s/secrets/secrets.enc:/run/secrets/secrets.enc:ro
-      # - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
     secrets:
       - secret_key
     healthcheck:
@@ -32,25 +31,23 @@ services:
   wordpress:
     build: ./requirements/bonus/wordpress
     container_name: wordpress
-    image: wordpress:42
+    image: wordpress:af
     expose:
       - "9000"
     depends_on:
       mariadb:
         condition: service_healthy
-      # issue wp connection with redis
       redis:
         condition: service_healthy
-      # issue wp connection with redis END
     env_file:
       - /home/antoda-s/secrets/.env
-    restart: on-failure:5
+    restart: 
+      on-failure:5
     networks:
       - inception
     volumes:
       - wpvol:/var/www/html/wordpress
       - /home/antoda-s/secrets/secrets.enc:/run/secrets/secrets.enc:ro
-      # - ../secrets/secrets.enc:/run/secrets/secrets.enc:ro
     secrets:
       - secret_key
     logging:
@@ -60,11 +57,11 @@ services:
         max-file: "3"
   
   website:
-    build: ./requirements/bonus/website  # Path to the Dockerfile for the website service
+    build: ./requirements/bonus/website
     container_name: website
-    image: website:42
+    image: website:af
     volumes:
-      - wsvol:/var/www/html  # Mount the local HTML files into the container
+      - wsvol:/var/www/html
     networks:
       - inception
     restart: on-failure:5
@@ -72,19 +69,20 @@ services:
   nginx:
     build: ./requirements/nginx
     container_name: nginx
-    image: nginx:42
+    image: nginx:af
     ports:
       - "443:443"
-      - "80:80"  # Add port 80 for HTTP (optional, if you want to serve the HTML site over HTTP)
+      - "80:80"
     depends_on:
       - wordpress
-      - website # Ensure the website service is running before Nginx
+      - website
     env_file:
       - /home/antoda-s/secrets/.env
-    restart: on-failure:5
+    restart: 
+      on-failure:5
     volumes:
       - wpvol:/var/www/html/wordpress
-      - wsvol:/var/www/html/website  # New HTML site volume
+      - wsvol:/var/www/html/website
     networks:
       - inception
     logging:
@@ -96,7 +94,7 @@ services:
   ftp:
     build: ./requirements/bonus/ftp
     container_name: ftp
-    image: ftp:42
+    image: ftp:af
     expose:
       - "21"
       - "10000-10100"
@@ -107,7 +105,8 @@ services:
       - wordpress
     env_file:
       - /home/antoda-s/secrets/.env
-    restart: on-failure:5
+    restart: 
+      on-failure:5
     volumes:
       - wpvol:/var/ftp/users/ftpuser/wordpress
       - /home/antoda-s/secrets/secrets.enc:/run/secrets/secrets.enc:ro
@@ -120,6 +119,7 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+  
   redis:
     build: requirements/bonus/redis
     container_name: redis
@@ -133,12 +133,12 @@ services:
       interval: 10s
       retries: 3
       timeout: 3s
-      # issue wp connection with redis END
     logging:
       driver: json-file
       options:
         max-size: "10m"
         max-file: "3"
+  
   adminer:
     build: requirements/bonus/adminer
     container_name: adminer
@@ -150,8 +150,7 @@ services:
       - inception
     restart:
       on-failure:5
-    mem_limit: 512m  # Adjust as needed
-    # stop_grace_period: 30s
+    mem_limit: 512m
  
   rsync:
     build: requirements/bonus/rsync

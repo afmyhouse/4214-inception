@@ -1,7 +1,15 @@
 FROM debian:bullseye
-RUN apt-get update -y && apt-get upgrade -y
-RUN apt-get install -y cron rsync mariadb-client
+
+# Install required packages
+RUN apt-get update -y && apt-get upgrade -y \
+    && apt-get install -y cron rsync mariadb-client openssl
+
+# Copy scripts
 COPY ./tools/entrypoint.sh /entrypoint.sh
 COPY ./tools/backup.sh /backup.sh
-RUN chmod +x /entrypoint.sh && chmod +x /backup.sh && /entrypoint.sh
-ENTRYPOINT [ "cron", "-f" ]
+
+# Set permissions
+RUN chmod +x /entrypoint.sh /backup.sh
+
+# Run entrypoint script at startup
+ENTRYPOINT ["/entrypoint.sh"]

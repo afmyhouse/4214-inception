@@ -19,21 +19,21 @@ RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 
-FROM debian:bullseye
+# FROM debian:bullseye
 
-# Install dependencies
-RUN apt-get update -y && apt-get upgrade -y
-RUN apt-get install -y wget php php-mysqli
+# # Install dependencies
+# RUN apt-get update -y && apt-get upgrade -y
+# RUN apt-get install -y wget php php-mysqli
 
-# Copy the entrypoint script
-COPY ./tools/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# # Copy the entrypoint script
+# COPY ./tools/entrypoint.sh /entrypoint.sh
+# RUN chmod +x /entrypoint.sh
 
-# Set the working directory
-WORKDIR /var/www/html
+# # Set the working directory
+# WORKDIR /var/www/html
 
-# Run the entrypoint script when the container starts
-ENTRYPOINT ["/entrypoint.sh"]
+# # Run the entrypoint script when the container starts
+# ENTRYPOINT ["/entrypoint.sh"]
 
-# Start the PHP server
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]
+# # Start the PHP server
+# CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]
